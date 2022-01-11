@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Editor\NavMeshSurfaceEditor.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Editor\NavMeshModifierVolumeEditor.cs" />
+    <Compile Include="Assets\Content\Scripts\Editor\ObjectPlacementUtility.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Editor\NavMeshAssetManager.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Editor\NavMeshModifierEditor.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Editor\NavMeshComponentsGUIUtility.cs" />

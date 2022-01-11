@@ -14,7 +14,7 @@ namespace UnityEditor.AI
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(NavMeshSurface))]
-    class NavMeshSurfaceEditor : Editor
+    public class NavMeshSurfaceEditor : Editor
     {
         SerializedProperty m_AgentTypeID;
         SerializedProperty m_BuildHeightMesh;
@@ -60,7 +60,7 @@ namespace UnityEditor.AI
             get { return EditMode.editMode == EditMode.SceneViewEditMode.Collider && EditMode.IsOwner(this); }
         }
 
-        void OnEnable()
+        public virtual void OnEnable()
         {
             m_AgentTypeID = serializedObject.FindProperty("m_AgentTypeID");
             m_BuildHeightMesh = serializedObject.FindProperty("m_BuildHeightMesh");
