@@ -10,7 +10,8 @@ public enum CollectableType
 {
     STAR,
     HEALTH,
-    HAZARD
+    HAZARD,
+    CLUE
 }
 public abstract class Collectable : MonoBehaviour
 {

@@ -76,6 +76,7 @@
     <Compile Include="Assets\Content\Scripts\Interactables\ParticleSystemInteractable.cs" />
     <Compile Include="Assets\Content\Scripts\Collectables\StarCollectable.cs" />
     <Compile Include="Assets\Content\Scripts\Destructables\DestructableCanon.cs" />
+    <Compile Include="Assets\Content\Scripts\Collectables\ClueCollectable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

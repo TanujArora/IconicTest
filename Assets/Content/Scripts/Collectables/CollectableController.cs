@@ -8,9 +8,11 @@ using UnityEngine;
 
 public class CollectableController
 {
+    private Collectable[] collectables;
+
 	public CollectableController(Transform collectableContainer, CharacterController character)
 	{
-		Collectable[] collectables = collectableContainer.GetComponentsInChildren<Collectable>();
+		collectables = collectableContainer.GetComponentsInChildren<Collectable>();
 		foreach(Collectable collectable in collectables)
 		{
             collectable.onPickedUp += Collectable_onPickedUp;
@@ -18,7 +20,12 @@ public class CollectableController
         
 	}
 
-
+    //This will return only class of type collectables
+    public T[] getCollectableList<T>(CollectableType t)
+    {
+        T[] filteredList = collectables.Where(x => x.collectableType == t && x.GetComponent<Collectable>()).Select(x => x.GetComponent<T>()).ToArray();
+        return filteredList;
+    }
 
     private void Collectable_onPickedUp(CollectableType type, GameObject _object)
     {
@@ -47,6 +54,13 @@ public class CollectableController
                 CharacterController _character = GameObject.FindObjectOfType<CharacterController>();
                 _character.TakeDamage();
                 OnPickedUp(_object.GetComponent<Collectable>());
+
+                break;
+            case CollectableType.CLUE:
+
+                OnPickedUp(_object.GetComponent<Collectable>());
+
+                //Use UI to display the clue!!
 
                 break;
         }
