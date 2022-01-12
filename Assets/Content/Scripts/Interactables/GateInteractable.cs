@@ -19,7 +19,6 @@ public class GateInteractable : InteractableObject
     public override void OnTriggerEnterWithCondition(Collider other)
     {
         base.OnTriggerEnterWithCondition(other);
-        Debug.Log("Character collided with gate");
         if (other.GetComponent<CharacterController>())
         {
             OnCollidedWithGate?.Invoke(action);

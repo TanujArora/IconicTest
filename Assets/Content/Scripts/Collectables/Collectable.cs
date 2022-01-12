@@ -11,24 +11,35 @@ public enum CollectableType
     STAR,
     HEALTH,
     HAZARD,
-    CLUE
+    CLUE,
+    TREASURE
 }
 public abstract class Collectable : MonoBehaviour
 {
     public delegate void PickedUpEvent(CollectableType type, GameObject gameObject);
-    /*private CollectableController collectableController;*/
 
     public event PickedUpEvent onPickedUp, onAnimationCompleteEvent;
     internal CollectableType collectableType;
-	/*public void Setup(CollectableController collectableController)
-	{
-		this.collectableController = collectableController;
-	}*/
+    public string[] allowedTagsToCollide;
+	
 	public abstract void OnPickedUp(CollectableType collectableType/*CollectableController collectableController*/);
     private void OnTriggerEnter(Collider other)
     {
-        OnPickedUp(collectableType);
-        onPickedUp?.Invoke(collectableType, gameObject);
-        GetComponent<Collider>().enabled = false;
+        if (allowedTagsToCollide != null && allowedTagsToCollide.Length > 0)
+        {
+            if (allowedTagsToCollide.Contains(other.tag))
+            {
+                OnPickedUp(collectableType);
+                onPickedUp?.Invoke(collectableType, gameObject);
+                GetComponent<Collider>().enabled = false;
+            }
+        }
+        else
+        {
+            OnPickedUp(collectableType);
+            onPickedUp?.Invoke(collectableType, gameObject);
+            GetComponent<Collider>().enabled = false;
+        }
+        
     }
 }

@@ -5,10 +5,12 @@ using UnityEngine.AI;
 
 public class CharacterController : MonoBehaviour
 {
+	public delegate void OnPlayerHit();
+
 	private CharacterMovement characterMovement;
 	private NavMeshAgent navAgent;
 	private Animator animator;
-	private int maxHealth = 50;
+	private int maxHealth = 100;
 	private int health;
     private bool isEquipped = false;
 	private Vector3 targetLookAtPoint;
@@ -18,6 +20,8 @@ public class CharacterController : MonoBehaviour
 	public Transform shootPointTransform;
 	public Bullet bulletPrefab;
 	public bool disableControls = false;
+
+	public event OnPlayerHit OnGameOver;
 
     void Start()
     {
@@ -74,11 +78,11 @@ public class CharacterController : MonoBehaviour
 		Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit = new RaycastHit();
 
-		if (Physics.Raycast(r, out hit, Mathf.Infinity))
+		if (Physics.Raycast(r, out hit, Mathf.Infinity, 1 << 3))
 		{
 			if (hit.transform.tag == "Ground")
 			{
-				targetLookAtPoint =  new Vector3(hit.point.x, shootPointTransform.position.y, hit.point.z);
+				targetLookAtPoint =  new Vector3(hit.point.x, hit.point.y, hit.point.z);
 			}
 		}
 	}
@@ -90,7 +94,7 @@ public class CharacterController : MonoBehaviour
 		float m_Angle = Vector3.Angle(shootPointTransform.forward, (targetLookAtPoint - shootPointTransform.position).normalized);
 
 
-		if (m_Angle > 90)
+		if (m_Angle > 120)
 			return;
 
 
@@ -117,9 +121,27 @@ public class CharacterController : MonoBehaviour
 	{
 		health -= 10;
 		health = Mathf.Max(health, 0);
+		if (health <= 0)
+		{
+			Debug.Log("Game Over!!");
+			gameObject.SetActive(false);
+			OnGameOver?.Invoke();
+		}
 	}
 
-   
+	public void TakeDamage(int damage)
+	{
+		health -= damage;
+		health = Mathf.Max(health, 0);
+		if (health <= 0)
+		{
+			Debug.Log("Game Over!!");
+			gameObject.SetActive(false);
+			OnGameOver?.Invoke();
+		}
+	}
+
+
 
 	public int MaxHealth
 	{

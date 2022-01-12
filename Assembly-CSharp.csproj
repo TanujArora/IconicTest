@@ -80,6 +80,7 @@
     <Compile Include="Assets\Content\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\Content\Scripts\Interactables\Actions\GateOpenAction.cs" />
     <Compile Include="Assets\Content\Scripts\Interactables\GateInteractable.cs" />
+    <Compile Include="Assets\Content\Scripts\Collectables\TreasureCollectible.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

@@ -63,6 +63,10 @@ public class CollectableController
                 uiController.DisplayClue(_object.GetComponent<ClueCollectable>());
 
                 break;
+            case CollectableType.TREASURE:
+                OnPickedUp(_object.GetComponent<Collectable>());
+                uiController.DisplayGameEndUI();
+                break;
         }
     }
 

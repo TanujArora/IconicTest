@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public CharacterController characterController;
+    public bool hardMode;
 
     private CollectableController collectableController;
     private UIController uiController;
@@ -13,6 +14,19 @@ public class GameController : MonoBehaviour
     private CameraController cameraController;
 
     private int[] password;
+
+    private void Awake()
+    {
+        if (hardMode)
+        {
+            int startHealth = characterController.MaxHealth / 2;
+            characterController.SetHealth(startHealth);
+        }
+        else
+        {
+            characterController.SetHealth(characterController.MaxHealth);
+        }
+    }
 
     private void Start()
     {
@@ -25,6 +39,13 @@ public class GameController : MonoBehaviour
         gateInteractable = GameObject.Find("Gate").GetComponent<GateInteractable>();
         gateInteractable.OnCollidedWithGate += GateInteractable_OnCollidedWithGate;
         UpdateClues();
+
+        characterController.OnGameOver += CharacterController_OnGameOver;
+    }
+
+    private void CharacterController_OnGameOver()
+    {
+        uiController.DisplayGameOverUI();
     }
 
     private void GateInteractable_OnCollidedWithGate(IInteractableAction action)
@@ -43,6 +64,11 @@ public class GameController : MonoBehaviour
             clues[i].SetClueValue(i + 1, password[i]);
         }
 
+    }
+
+    private void Update()
+    {
+        uiController.Update();
     }
 
     private void LateUpdate()
