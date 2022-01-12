@@ -54,19 +54,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Content\Scripts\GameController.cs" />
+    <Compile Include="Assets\Content\Scripts\Interactables\Actions\ParticleSystemAction.cs" />
+    <Compile Include="Assets\Content\Scripts\Collectables\SpearHazardCollectable.cs" />
+    <Compile Include="Assets\Content\Scripts\Destructables\Destructable.cs" />
     <Compile Include="Assets\Content\Scripts\Character\CharacterController.cs" />
+    <Compile Include="Assets\Content\Scripts\Destructables\Bullet.cs" />
+    <Compile Include="Assets\Content\Scripts\Collectables\HealthCollectable.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Scripts\NavMeshLink.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
+    <Compile Include="Assets\Content\Scripts\Interactables\Actions\RotateAction.cs" />
+    <Compile Include="Assets\Content\Scripts\Interactables\InteractableObject.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
-    <Compile Include="Assets\Content\Scripts\Camera\CameraController.cs" />
-    <Compile Include="Assets\Content\Scripts\Character\CharacterMovement.cs" />
+    <Compile Include="Assets\Content\Scripts\Interactables\RotateInteractable.cs" />
     <Compile Include="Assets\Content\Scripts\Collectables\Collectable.cs" />
-    <Compile Include="Assets\Content\Scripts\Collectables\CollectableController.cs" />
-    <Compile Include="Assets\Content\Scripts\Collectables\HealthCollectable.cs" />
+    <Compile Include="Assets\Content\Scripts\Interactables\Actions\IInteractableAction.cs" />
+    <Compile Include="Assets\Content\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Content\Scripts\Collectables\StarController.cs" />
+    <Compile Include="Assets\Content\Scripts\Collectables\CollectableController.cs" />
+    <Compile Include="Assets\Content\Scripts\Character\CharacterMovement.cs" />
+    <Compile Include="Assets\Content\Scripts\Interactables\ParticleSystemInteractable.cs" />
     <Compile Include="Assets\Content\Scripts\Collectables\StarCollectable.cs" />
-    <Compile Include="Assets\Content\Scripts\Collectables\SpearHazardCollectable.cs" />
+    <Compile Include="Assets\Content\Scripts\Destructables\DestructableCanon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

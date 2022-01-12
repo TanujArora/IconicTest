@@ -7,15 +7,22 @@ public class CharacterController : MonoBehaviour
 {
 	private CharacterMovement characterMovement;
 	private NavMeshAgent navAgent;
+	private Animator animator;
 	private int maxHealth = 50;
 	private int health;
     private bool isEquipped = false;
+	private Vector3 targetLookAtPoint;
     public Transform handTransform;
+	public bool shouldLookAtMousePosition = false;
+	public bool canShoot = false;
+	public Transform shootPointTransform;
+	public Bullet bulletPrefab;
 
     void Start()
     {
 		characterMovement = GetComponent<CharacterMovement>();
 		navAgent = GetComponent<NavMeshAgent>();
+		animator = GetComponent<Animator>();
 		//health = maxHealth;
 	}
 
@@ -40,8 +47,52 @@ public class CharacterController : MonoBehaviour
 		}
 
 		characterMovement.Move(movement);
+
+		if (shouldLookAtMousePosition)
+		{
+			UpdateLookAtPoint();
+		}
+
+		if (canShoot)
+		{
+			if (Input.GetMouseButtonDown(0))
+			{
+				ShootBullet();
+			}
+		}
 	}
 
+	void UpdateLookAtPoint()
+	{
+		Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit = new RaycastHit();
+
+		if (Physics.Raycast(r, out hit, Mathf.Infinity))
+		{
+			if (hit.transform.tag == "Ground")
+			{
+				targetLookAtPoint =  new Vector3(hit.point.x, shootPointTransform.position.y, hit.point.z);
+			}
+		}
+	}
+
+	void ShootBullet()
+	{
+		
+
+		float m_Angle = Vector3.Angle(shootPointTransform.forward, (targetLookAtPoint - shootPointTransform.position).normalized);
+
+
+		if (m_Angle > 90)
+			return;
+
+
+		Bullet b = Instantiate<Bullet>(bulletPrefab, shootPointTransform.position, Quaternion.identity);
+		Vector3 targetDirection = (targetLookAtPoint - shootPointTransform.position).normalized;//transform.forward;
+
+		b.GetComponent<Rigidbody>().AddForce(targetDirection * b.bulletVelocity, ForceMode.Impulse);
+		Destroy(b.gameObject, 10);
+	}
 	public void SetHealth(int newHealth)
 	{
 		health = newHealth;
@@ -76,6 +127,21 @@ public class CharacterController : MonoBehaviour
     public bool Equipped
     {
         get { return isEquipped; }
+    }
+
+    private void OnAnimatorIK(int layerIndex)
+    {
+		if (shouldLookAtMousePosition)
+		{
+			animator.SetLookAtWeight(0.5f);
+			animator.SetLookAtPosition(targetLookAtPoint);
+		}
+		else
+		{
+			animator.SetLookAtWeight(0);
+		}
+		
+		
     }
 
 }
