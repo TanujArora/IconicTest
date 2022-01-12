@@ -17,6 +17,7 @@ public class CharacterController : MonoBehaviour
 	public bool canShoot = false;
 	public Transform shootPointTransform;
 	public Bullet bulletPrefab;
+	public bool disableControls = false;
 
     void Start()
     {
@@ -28,6 +29,12 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
+		if (disableControls)
+		{
+			characterMovement.Move(Vector3.zero);
+			return;
+		}
+
 		Vector3 movement = Vector3.zero;
         if(Input.GetKey(KeyCode.W))
 		{

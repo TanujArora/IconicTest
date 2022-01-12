@@ -9,9 +9,10 @@ using UnityEngine;
 public class CollectableController
 {
     private Collectable[] collectables;
-
-	public CollectableController(Transform collectableContainer, CharacterController character)
+    private UIController uiController;
+	public CollectableController(Transform collectableContainer, CharacterController character, UIController uiController)
 	{
+        this.uiController = uiController;
 		collectables = collectableContainer.GetComponentsInChildren<Collectable>();
 		foreach(Collectable collectable in collectables)
 		{
@@ -59,8 +60,7 @@ public class CollectableController
             case CollectableType.CLUE:
 
                 OnPickedUp(_object.GetComponent<Collectable>());
-
-                //Use UI to display the clue!!
+                uiController.DisplayClue(_object.GetComponent<ClueCollectable>());
 
                 break;
         }

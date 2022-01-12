@@ -4,6 +4,14 @@ public abstract class InteractableObject : MonoBehaviour
 {
     protected IInteractableAction action;
 
+    public bool conditionalAction = false;
+
+    public virtual void OnTriggerEnterWithCondition(Collider other)
+    { }
+
+    public virtual void OnTriggerExitWithCondition(Collider other)
+    { }
+
     private void Update()
     {
         if (action != null)
@@ -14,17 +22,32 @@ public abstract class InteractableObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (action != null)
+        if (conditionalAction)
         {
-            action.Start();
+            OnTriggerEnterWithCondition(other);
         }
+        else
+        {
+            if (action != null)
+            {
+                action.Start();
+            }
+        }
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (action != null)
+        if (conditionalAction)
         {
-            action.Stop();
+            OnTriggerExitWithCondition(other);
+        }
+        else
+        {
+            if (action != null)
+            {
+                action.Stop();
+            }
         }
     }
 }
