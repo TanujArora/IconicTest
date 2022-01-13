@@ -38,6 +38,10 @@ public class UIController
 	private RectTransform GameEndUIBox;
 	private Button GameEndUIRetryButton;
 
+	private CanvasGroup PauseUI;
+	private RectTransform PauseUIBox;
+	private Button PauseUIRetryButton, PauseUIResumeButton,PauseUIExitButton;
+
 
 	public UIController(Transform UIRoot, CharacterController characterController, StarController starController)
 	{
@@ -70,6 +74,12 @@ public class UIController
 		GameOverUI = UIRoot.Find("GameOverUI").GetComponent<CanvasGroup>();
 		GameOverUIBox = UIRoot.Find("GameOverUI/Box").GetComponent<RectTransform>();
 		GameOverUIRetryButton = UIRoot.Find("GameOverUI/Box/Retry").GetComponent<Button>();
+
+		PauseUI = UIRoot.Find("PauseUI").GetComponent<CanvasGroup>();
+		PauseUIBox = UIRoot.Find("PauseUI/Box").GetComponent<RectTransform>();		
+		PauseUIRetryButton = UIRoot.Find("PauseUI/Box/Retry").GetComponent<Button>();
+		PauseUIResumeButton = UIRoot.Find("PauseUI/Box/Resume").GetComponent<Button>();
+		PauseUIExitButton = UIRoot.Find("PauseUI/Box/Exit").GetComponent<Button>();
 
 		GameEndUI = UIRoot.Find("GameEndUI").GetComponent<CanvasGroup>();
 		GameEndUIBox = UIRoot.Find("GameEndUI/Box").GetComponent<RectTransform>();
@@ -107,6 +117,13 @@ public class UIController
 		GameEndUI.gameObject.SetActive(false);
 		GameEndUIBox.localScale = Vector3.zero;
 		GameEndUIRetryButton.onClick.AddListener(OnGameOverRetryPressed);
+
+		PauseUI.alpha = 0;
+		PauseUI.gameObject.SetActive(false);
+		PauseUIBox.localScale = Vector3.zero;
+		PauseUIRetryButton.onClick.AddListener(OnGameOverRetryPressed);
+		PauseUIResumeButton.onClick.AddListener(ClosePauseUI);
+		PauseUIExitButton.onClick.AddListener(OnExitPressed);
 	}
 
 	public void OnStartPressed()
@@ -133,6 +150,17 @@ public class UIController
 		healthSlider.fillAmount = (float)characterController.Health / characterController.MaxHealth;
 		healthText.text = characterController.Health + "/" + characterController.MaxHealth;
 		starText.text = starController.Star.ToString();
+
+		if (Input.GetKeyUp(KeyCode.Escape))
+		{
+			if (GameStartUI.gameObject.activeInHierarchy ||
+				ClueUI.gameObject.activeInHierarchy ||
+				GateUI.gameObject.activeInHierarchy ||
+				GameEndUI.gameObject.activeInHierarchy)
+				return;
+
+			DisplayPauseUI();
+		}
 	}
 
 	public void DisplayClue(ClueCollectable clueCollectable)
@@ -250,5 +278,40 @@ public class UIController
 	public void OnGameOverRetryPressed()
 	{
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		Time.timeScale = 1;
+	}
+
+
+	public void ClosePauseUI()
+	{
+		PauseUIBox.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack).OnComplete(() =>
+		{
+			PauseUI.DOFade(0, 0.3f).OnComplete(() =>
+			{
+				PauseUI.gameObject.SetActive(false);
+				characterController.disableControls = false;
+				Time.timeScale = 1;
+			}).SetUpdate(true);
+		}).SetUpdate(true);
+	}
+	public void DisplayPauseUI()
+    {
+		Time.timeScale = 0;
+		characterController.disableControls = true;
+
+		PauseUI.gameObject.SetActive(true);
+		PauseUI.DOFade(1, 0.5f).OnComplete(() =>
+		{
+			PauseUIBox.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack).SetUpdate(true);
+		}).SetUpdate(true);
+	}
+
+	public void OnExitPressed()
+	{
+#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
 	}
 }
