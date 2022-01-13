@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,6 +53,10 @@
     <UnityVersion>2021.1.24f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Content\Scripts\Collectables\ClueCollectable.cs" />
     <Compile Include="Assets\Content\Scripts\GameController.cs" />
     <Compile Include="Assets\Content\Scripts\Interactables\Actions\ParticleSystemAction.cs" />
     <Compile Include="Assets\Content\Scripts\Collectables\SpearHazardCollectable.cs" />
@@ -60,14 +64,19 @@
     <Compile Include="Assets\Content\Scripts\Character\CharacterController.cs" />
     <Compile Include="Assets\Content\Scripts\Destructables\Bullet.cs" />
     <Compile Include="Assets\Content\Scripts\Collectables\HealthCollectable.cs" />
+    <Compile Include="Assets\Content\Scripts\Interactables\Actions\GateOpenAction.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Scripts\NavMeshLink.cs" />
+    <Compile Include="Assets\Content\Scripts\UI\UIController.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Scripts\NavMeshModifierVolume.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Scripts\NavMeshSurface.cs" />
     <Compile Include="Assets\Content\Scripts\Interactables\Actions\RotateAction.cs" />
+    <Compile Include="Assets\Content\Scripts\Destructables\DestructableCanon.cs" />
     <Compile Include="Assets\Content\Scripts\Interactables\InteractableObject.cs" />
     <Compile Include="Assets\Content\ExternalAssets\NavMeshComponents\Scripts\NavMeshModifier.cs" />
     <Compile Include="Assets\Content\Scripts\Interactables\RotateInteractable.cs" />
     <Compile Include="Assets\Content\Scripts\Collectables\Collectable.cs" />
+    <Compile Include="Assets\Content\Scripts\Collectables\TreasureCollectible.cs" />
+    <Compile Include="Assets\Content\Scripts\Interactables\GateInteractable.cs" />
     <Compile Include="Assets\Content\Scripts\Interactables\Actions\IInteractableAction.cs" />
     <Compile Include="Assets\Content\Scripts\Camera\CameraController.cs" />
     <Compile Include="Assets\Content\Scripts\Collectables\StarController.cs" />
@@ -75,12 +84,6 @@
     <Compile Include="Assets\Content\Scripts\Character\CharacterMovement.cs" />
     <Compile Include="Assets\Content\Scripts\Interactables\ParticleSystemInteractable.cs" />
     <Compile Include="Assets\Content\Scripts\Collectables\StarCollectable.cs" />
-    <Compile Include="Assets\Content\Scripts\Destructables\DestructableCanon.cs" />
-    <Compile Include="Assets\Content\Scripts\Collectables\ClueCollectable.cs" />
-    <Compile Include="Assets\Content\Scripts\UI\UIController.cs" />
-    <Compile Include="Assets\Content\Scripts\Interactables\Actions\GateOpenAction.cs" />
-    <Compile Include="Assets\Content\Scripts\Interactables\GateInteractable.cs" />
-    <Compile Include="Assets\Content\Scripts\Collectables\TreasureCollectible.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -337,11 +340,11 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>D:\Work\Unity\2021.1.24f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-      <HintPath>Library\PackageCache\com.unity.visualscripting@1.6.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="DOTween">
       <HintPath>Assets\Plugins\Demigiant\DOTween\DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
+      <HintPath>Library\PackageCache\com.unity.visualscripting@1.6.1\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>D:\Work\Unity\2021.1.24f1\Editor\Data\NetStandard\ref\2.0.0\netstandard.dll</HintPath>

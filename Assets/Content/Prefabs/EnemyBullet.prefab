@@ -128,3 +128,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletVelocity: 20
   bulletDamage: 5
+  isEnemyBullet: 1
